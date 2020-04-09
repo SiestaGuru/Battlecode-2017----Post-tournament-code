@@ -1,0 +1,32 @@
+So. These are some tricks found that are borderline exploits and probably shouldn't be used in real competitions:
+
+
+A string initialization is always 2 bytecode, regardless of its length
+byte[] bytes =  string.toBytes()   is also always 2 bytecodes
+
+So for 4 bytecodes, you can initialize a byte[] of arbitrary length, even including arbitrary values (by hacking a string together)
+
+
+
+
+A bunch of the integer calculation methods in Math are free. Clock.getBytecodeLeft is also free
+These have the advantage that not only is their execution free, they push something on the stack for free
+And also, since there is no bytecode cost involed, getbytecodeleft returns a predictable number
+
+so hilariously, this:
+int i = 0;
+which takes 2 bytecodes, is more expensive than:
+int  i = Math.subtractExact(Clock.getBytecodesLeft(), Clock.getBytecodesLeft());
+
+which takes 1 bytecode
+
+using floodiv, we can also create the number 1, then add another 1, and so create every integer using a combination of these types of methods
+
+The cheapest way of doing:
+int i = k * 2;
+which usually takes 4 bytecode
+is:
+int i= Math.multiplyExact( k    ,Math.addExact(Math.floorDiv(Clock.getBytecodesLeft(), Clock.getBytecodesLeft()),Math.floorDiv(Clock.getBytecodesLeft(), Clock.getBytecodesLeft())));
+
+which takes only 2 bytecodes, one for fetching k, and one for storing the result into i.
+

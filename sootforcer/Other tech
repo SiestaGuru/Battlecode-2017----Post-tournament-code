@@ -1,0 +1,9 @@
+This page gives a nice idea
+http://www.anatid.net/2015/12/battlecode-idioms.html
+Using octal based integers in strings. You can map these to a single character. Possibly giving cheaper access to ints
+Or, we could convert chars into bytes etc
+
+Perhaps we could do a better hashmap using stringbuilders that way. You won't need to initiate a huge array, but can
+just generate a 16 bit hash value, convert to char, put in stringbuilder. Then check indexof using the same thing later on
+Allows less collisions (we can store more values in 16 bits). Doesn't require initiation and clearing it is cheap.
+However, checking whether the value is contained may be more expensive.
